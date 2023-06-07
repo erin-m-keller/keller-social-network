@@ -19,9 +19,9 @@
   ![javaScript](https://img.shields.io/badge/-JavaScript-61DAFB?color=red&style=flat)
   ![expressJS](https://img.shields.io/badge/-Express.js-61DAFB?color=orange&style=flat)
   ![nodeJS](https://img.shields.io/badge/-Node.js-61DAFB?color=yellow&style=flat)
-  ![mongoDB](https://img.shields.io/badge/-Mongoose-61DAFB?color=green&style=flat)
-  ![mongoose](https://img.shields.io/badge/-Moment.js-61DAFB?color=blue&style=flat)
-  ![momentJS](https://img.shields.io/badge/-FomanticUI-61DAFB?color=purple&style=flat)
+  ![mongoDB](https://img.shields.io/badge/-MongoDB-61DAFB?color=green&style=flat)
+  ![mongoose](https://img.shields.io/badge/-Mongoose-61DAFB?color=blue&style=flat)
+  ![momentJS](https://img.shields.io/badge/-Moment.js-61DAFB?color=purple&style=flat)
 
   ## User Story
   ```md
