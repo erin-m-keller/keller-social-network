@@ -1,7 +1,9 @@
 // initialize variables and import required module
-const router = require('express').Router();
+const router = require('express').Router(),
+      userRoutes = require('./userRoutes');
 
-//router.use('/routeNameHere', routeNameHere);
+// set the api path
+router.use('/users', userRoutes);
 
 // export the routes
 module.exports = router;
