@@ -53,7 +53,8 @@ const thoughtSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true, // include virtual properties when converting the document to JSON
       getters: true // apply getters, including virtual getters, when converting the document to JSON
-    }
+    },
+    id: false  // exclude the default "_id" field from the document
   }
 );
 
