@@ -1,5 +1,6 @@
 // initialize variables and import required module
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+      { Schema, Types } = mongoose;
 
 // create a new Mongoose schema
 const reactionSchema = new mongoose.Schema(

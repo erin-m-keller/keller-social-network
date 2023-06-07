@@ -2,6 +2,7 @@
 const router = require('express').Router(),
       { 
         getUsers,
+        createUser,
       } = require('../../controllers/userController.js');
 
 // the path is /api/users
