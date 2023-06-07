@@ -1,6 +1,7 @@
-const connection = require('../config/connection');
-const { User, Thought } = require('../models');
-const { usersArr } = require('./data');
+// initialize variables and import required module
+const connection = require('../config/connection'),
+      { User, Thought } = require('../models'),
+      { usersArr } = require('./data');
 
 // return error if there is an issue connecting to the database
 connection.on('error', (err) => err);
@@ -21,12 +22,14 @@ connection.once('open', async () => {
 
   // add users to the users array
   for (let i = 0; i < usersArr.length; i++) {
+    // initialize variables
     const user = usersArr[i],
           { username, email } = user;
 
+    // push the object with the current username and email
     users.push({
-      username,
-      email
+      username: username,
+      email: email
     });
   }
 
@@ -35,6 +38,10 @@ connection.once('open', async () => {
 
   // log out the seed data to indicate what should appear in the database
   console.table(users);
+
+  // log success message
   console.info('Seeding complete! 🌱');
+
+  // exit the process
   process.exit(0);
 });
