@@ -46,7 +46,7 @@ const usernames = [
   
   // map the users array, and create an object with the username and email (based on the username index)
   const usersArr = usernames.map((username, index) => ({
-    username,
+    username: username,
     email: emails[index]
   }));
   
