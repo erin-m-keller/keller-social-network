@@ -44,6 +44,7 @@ const usernames = [
     'monkey@example.com'
   ];
   
+  // map the users array, and create an object with the username and email (based on the username index)
   const usersArr = usernames.map((username, index) => ({
     username,
     email: emails[index]

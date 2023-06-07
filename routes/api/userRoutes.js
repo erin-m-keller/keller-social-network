@@ -8,4 +8,5 @@ const router = require('express').Router(),
 // the path is /api/users
 router.route('/').get(getUsers).post(createUser);
 
+// export the routes
 module.exports = router;

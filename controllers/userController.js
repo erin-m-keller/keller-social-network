@@ -1,18 +1,22 @@
 const { User, Thought } = require('../models');
 
 module.exports = {
-  // Get all courses
+  // get all users
   getUsers(req, res) {
+    // find all users
     User.find()
+    // return data
       .then((users) => res.json(users))
+      // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   },
+  // create user
   createUser(req, res) {
+    // create a new user
     User.create(req.body)
+      // return data
       .then((user) => res.json(user))
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
   },
 };
