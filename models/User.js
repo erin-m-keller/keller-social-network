@@ -30,7 +30,7 @@ const userSchema = new Schema(
     friends: [
       {
         type: mongoose.Schema.Types.ObjectId, // type is an object id
-        ref: 'Friends' // references the friends schema
+        ref: 'User' // references the user schema
       }
     ]
   },
@@ -39,13 +39,13 @@ const userSchema = new Schema(
       virtuals: true, // include virtual properties when converting the document to JSON
       getters: true // apply getters, including virtual getters, when converting the document to JSON
     },
-    id: false  // exclude the default "_id" field from the document
+    id: true  // exclude the default "_id" field from the document
   }
 );
 
 // define a virtual property called "friendCount" using a getter function
 userSchema.virtual('friendCount').get(function () {
-  return this.friends.length;  // return the length of the "friends" array
+  return this.friends.length; // return the length of the friends array
 });
 
 // create the User model using the userSchema

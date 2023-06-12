@@ -60,10 +60,11 @@ const thoughtSchema = new mongoose.Schema(
       virtuals: true, // include virtual properties when converting the document to JSON
       getters: true // apply getters, including virtual getters, when converting the document to JSON
     },
-    id: false  // exclude the default "_id" field from the document
+    id: true  // exclude the default "_id" field from the document
   }
 );
 
+// define a virtual property called "reactionCount" using a getter function
 thoughtSchema.virtual('reactionCount', {
   ref: 'Reaction', // refer to the name of the reaction model
   localField: '_id', // field from the current model (Thought)
