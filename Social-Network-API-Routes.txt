@@ -9,7 +9,7 @@ USERS:
 
 FRIENDS:
  - POST: add friend*
- - DELETE: remove friend
+ - DELETE: remove friend*
 
 REACTIONS:
  - POST: create reaction
