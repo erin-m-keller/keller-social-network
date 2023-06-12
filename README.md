@@ -77,8 +77,8 @@
   
   ## Usage
 
-  // TODO: Add video
-  
+  https://github.com/erin-m-keller/keller-social-network/assets/2955501/61e41add-35ee-4d71-a38a-f5f6e737882c
+
   ## License 
   [![MIT license](https://img.shields.io/badge/License-MIT-purple.svg)](https://lbesson.mit-license.org/)
   
