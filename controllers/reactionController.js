@@ -41,44 +41,36 @@ module.exports = {
    * with any associated thoughts
    */
   deleteReaction(req, res) {
-    // Initialize variables
-    const { thoughtId } = req.params;
-    const { reactionId } = req.body;
-  
-    // Find the thought by id
+    // initialize variables
+    const { thoughtId } = req.params,
+          { reactionId } = req.body;
+    // find the thought by id
     Thought.findById(thoughtId)
       .then((thought) => {
         if (!thought) {
-          // If thought not found, return status 404 and error message
+          // if thought not found, return status 404 and error message
           return res.status(404).json({ message: 'No thought with this ID.' });
         }
-
-        console.log("thought.reactions: " + JSON.stringify(thought.reactions));
-  
-        // Find the index of the reaction to be deleted
+        // find the index of the reaction to be deleted
         const reactionIdx = thought.reactions.findIndex(
           (reaction) => reaction.reactionId.toString() === reactionId
         );
-  
-        // If the reaction is not found
+        // if the reaction is not found
         if (reactionIdx === -1) {
-          // Return status 404 and error message
+          // return status 404 and error message
           return res.status(404).json({ message: 'No reaction with this ID.' });
         }
-  
-        // Remove the reaction from the thought's reactions array
+        // remove the reaction from the thought's reactions array
         thought.reactions.splice(reactionIdx, 1);
-  
-        // Save the updated thought object
+        // save the updated thought object
         return thought.save();
       })
+      // return updated data
       .then((updatedThought) => {
-        // Return the updated thought object after deleting the reaction
+        // return the updated thought object after deleting the reaction
         res.json(updatedThought);
       })
-      .catch((err) => {
-        // Return status 500 and error message
-        res.status(500).json(err);
-      });
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
   }
 };
