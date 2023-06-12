@@ -9,13 +9,15 @@ module.exports = {
   addReaction(req, res) {
     // initialize variables
     const { thoughtId } = req.params,
-          { reactionBody, username } = req.body,
-          newReaction = {
-            reactionBody,
-            username
-          };
+      { reactionBody, username } = req.body,
+      newReaction = {
+        reactionBody,
+        username
+      };
     // find the thought by id
     Thought.findById(thoughtId)
+      // exclude the '__v' field from the returned document
+      .select('-__v')
       // return data
       .then((thought) => {
         if (!thought) {
@@ -25,7 +27,9 @@ module.exports = {
         // add the new reaction to the thought's reactions array
         thought.reactions.push(newReaction);
         // save the updated thought object
-        return thought.save();
+        return thought.save()
+          // convert updated thought to javascript object
+          .then((updatedThought) => updatedThought.toObject({ getters: true, versionKey: false }));
       })
       // return updated data
       .then((updatedThought) => {
@@ -46,6 +50,9 @@ module.exports = {
           { reactionId } = req.body;
     // find the thought by id
     Thought.findById(thoughtId)
+      // exclude the '__v' field from the returned document
+      .select('-__v')
+      // return data
       .then((thought) => {
         if (!thought) {
           // if thought not found, return status 404 and error message
@@ -63,7 +70,9 @@ module.exports = {
         // remove the reaction from the thought's reactions array
         thought.reactions.splice(reactionIdx, 1);
         // save the updated thought object
-        return thought.save();
+        return thought.save()
+        // convert updated thought to javascript object
+        .then((updatedThought) => updatedThought.toObject({ getters: true, versionKey: false }));
       })
       // return updated data
       .then((updatedThought) => {

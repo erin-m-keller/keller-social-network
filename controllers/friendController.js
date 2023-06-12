@@ -11,25 +11,29 @@ module.exports = {
     const { userId, friendId } = req.params;
     // find the user by id
     User.findById(userId)
-    // return data
-    .then((user) => {
-      // if user not found
-      if (!user) {
-        // return status 404 and error message
-        return res.status(404).json({ message: 'No user with this ID.' });
-      }
-      // add the friend ID to the user's friends array
-      user.friends.push(friendId);
-      // save the updated user object
-      return user.save();
-    })
-    // return updated data
-    .then((updatedUser) => {
-      // return the updated user object with the new friend added
-      res.json(updatedUser);
-    })
-    // return status 500 and error message
-    .catch((err) => res.status(500).json(err));
+      // exclude the '__v' field from the returned document
+      .select('-__v')
+      // return data
+      .then((user) => {
+        // if user not found
+        if (!user) {
+          // return status 404 and error message
+          return res.status(404).json({ message: 'No user with this ID.' });
+        }
+        // add the friend ID to the user's friends array
+        user.friends.push(friendId);
+        // save the updated user object
+        return user.save();
+      })
+      // convert updated thought to javascript object
+      .then((updatedUser) => updatedUser.toObject({ getters: true, versionKey: false }))
+      // return updated data
+      .then((updatedUser) => {
+        // return the updated user object with the new friend added
+        res.json(updatedUser);
+      })
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
   },
   /**
    * @deleteFriend

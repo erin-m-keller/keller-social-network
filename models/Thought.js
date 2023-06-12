@@ -5,10 +5,6 @@ const mongoose = require('mongoose'),
 // create a new Mongoose schema
 const reactionSchema = new mongoose.Schema(
   {
-    reactionId: {
-      type: mongoose.Schema.Types.ObjectId, // type is an object id
-      default: () => new mongoose.Types.ObjectId() // generates new object id
-    },
     reactionBody: {
       type: String, // type is a string
       required: true, // reactionBody is required
@@ -23,6 +19,9 @@ const reactionSchema = new mongoose.Schema(
       default: Date.now, // default value is the current date
       get: timestamp => new Date(timestamp).toISOString() // formats the timestamp into an ISO string when queried
     }
+  },
+  {
+    id: false  // exclude the default "id" field from the document
   }
 );
 
