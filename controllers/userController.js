@@ -87,5 +87,5 @@ module.exports = {
       .then(() => res.json({ message: 'User and associated thoughts deleted.' }))
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
-  },
+  }
 };

@@ -9,6 +9,7 @@ const router = require('express').Router(),
       } = require('../../controllers/userController.js'),
       { 
         addFriend,
+        deleteFriend,
       } = require('../../controllers/friendController.js');
 
 // the path i:s /api/users
@@ -25,7 +26,8 @@ router
 // the path is: /api/users/:userId/friends/:friendId
 router
   .route('/:userId/friends/:friendId')
-  .post(addFriend);
+  .post(addFriend)
+  .delete(deleteFriend);
 
 
 // export the routes
