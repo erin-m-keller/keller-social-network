@@ -25,17 +25,12 @@ module.exports = {
   getUsers(req, res) {
     // find all users
     User.find()
-      // exclude the '__v' field from the returned document
-      .select('-__v')
+      // exclude the '__v' and 'friendCount' fields from the returned document
+      .select('-__v -friendCount')
       // return data
       .then(async (user) => {
-        // initialize variables
-        const userObj = {
-          user, // user data
-          friendCount: await countFriends(), // friend count
-        };
         // return the user object
-        return res.json(userObj); 
+        return res.json(user);
       })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
@@ -48,20 +43,34 @@ module.exports = {
   createUser(req, res) {
     // create a new user
     User.create(req.body)
-      // exclude the '__v' field from the returned document
-      .select('-__v')
       // return data
       .then(async (user) => {
         // initialize variables
-        const userObj = {
-          user, // user data
-          friendCount: await countFriends(), // friend count
-        };
-        // return the user object
-        return res.json(userObj); 
+        const newUser = user.toObject();
+        // exclude the '__v' field from the user document
+        delete newUser.__v;
+        // initialize variables
+        const friendCount = newUser.friends.length,
+              userObj = {
+                user: newUser, // user data
+                friendCount, // friend count
+              };
+        // return the user object with friend count
+        return res.json(userObj);
       })
-      // return status 500 and error message
-      .catch((err) => res.status(500).json(err));
+      // handle errors
+      .catch((err) => {
+        // If the error is a duplicate key error
+        if (err.code === 11000 && err.keyPattern && err.keyValue) {
+          // initialize variables
+          const duplicateKey = Object.keys(err.keyValue)[0],
+                message = `The ${duplicateKey} already exists.`;
+          // return status 400 and error message
+          return res.status(400).json({ message });
+        }
+        // return status 500 and error message for other errors
+        return res.status(500).json(err);
+      });
   },
   /**
    * @getSingleUser
@@ -108,20 +117,19 @@ module.exports = {
     .select('-__v')
     // return data
     .then(async (user) => {
-        if (!user) {
-          // if user not found, return status 404 and error message
-          res.status(404).json({ message: 'No user with this ID.' })
-        }
-        // initialize variables
-        const userObj = {
-          user, // user data
-          friendCount: await countFriends(), // friend count
-        };
-        // return the user object
-        return res.json(userObj);
-      })
-      // return status 500 and error message
-      .catch((err) => res.status(500).json(err));
+      if (!user) {
+        // if user not found, return status 404 and error message
+        return res.status(404).json({ message: 'No user with this ID.' });
+      }
+      // fetch the friend count separately
+      const friendCount = await countFriends();
+      // update the user object with the friend count
+      user.friendCount = friendCount;
+      // return the updated user object
+      return res.json({ user });
+    })
+    // return status 500 and error message
+    .catch((err) => res.status(500).json(err));
   },
   /**
    * @deleteUser

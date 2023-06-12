@@ -45,6 +45,8 @@ module.exports = {
     const { userId, friendId } = req.params;
     // find the user by id
     User.findById(userId)
+      // exclude the '__v' field from the returned document
+      .select('-__v')
       .then((user) => {
         // if user not found
         if (!user) {
