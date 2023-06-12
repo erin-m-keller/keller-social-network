@@ -17,7 +17,7 @@ REACTIONS:
 
 THOUGHTS:
  - GET: get all thoughts*
- - GET: get thought by id
+ - GET: get thought by id*
  - POST: create thought*
  - PUT: update thought by id
  - DELETE: delete a thought*

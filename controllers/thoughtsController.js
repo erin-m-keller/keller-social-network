@@ -62,6 +62,29 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   /**
+   * @updateThought
+   * updates a specific thought based on id
+   */
+  updateThought(req, res) {
+    // initialize variables
+    const { thoughtId } = req.params;
+    // find and update a specific thought
+    Thought.findOneAndUpdate(
+      { _id: thoughtId }, // thought id
+      { $set: req.body }, // data to update
+      { runValidators: true, new: true } // run any validation necessary on the data
+    // return data
+    ).then((thought) =>
+        !thought
+          // if thought not found, return status 404 and error message
+          ? res.status(404).json({ message: 'No thought with this ID.' })
+          // else, return thought
+          : res.json(thought)
+      )
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
+  },
+  /**
    * @deleteThought
    * deletes a thought based on id
    */
