@@ -4,6 +4,7 @@ const router = require('express').Router(),
         getUsers,
         createUser,
         getSingleUser,
+        updateUser,
       } = require('../../controllers/userController.js');
 
 // the path is /api/users
@@ -13,7 +14,7 @@ router.route('/').get(getUsers).post(createUser);
 router
   .route('/:userId')
   .get(getSingleUser)
-  //.put(updateCourse)
+  .put(updateUser)
   //.delete(deleteCourse);
 
 // export the routes

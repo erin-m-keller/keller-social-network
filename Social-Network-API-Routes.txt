@@ -1,11 +1,9 @@
 Social Network API
 
 USERS:
-- GET: Find all users
-- GET: Find user by ID
-- POST: create user
-- POST: create second user (do we need this?)
-- POST: create third user (do we need this?)
+- GET: Find all users*
+- GET: Find user by ID*
+- POST: create user*
 - PUT: update user
 - DELETE: delete user
 
