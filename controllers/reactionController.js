@@ -48,6 +48,8 @@ module.exports = {
     // initialize variables
     const { thoughtId } = req.params,
           { reactionId } = req.body;
+    console.log("thoughtId: " + thoughtId);
+    console.log("reactionId: " + reactionId);
     // find the thought by id
     Thought.findById(thoughtId)
       // exclude the '__v' field from the returned document
@@ -58,10 +60,12 @@ module.exports = {
           // if thought not found, return status 404 and error message
           return res.status(404).json({ message: 'No thought with this ID.' });
         }
+        console.log("thought: " + JSON.stringify(thought));
         // find the index of the reaction to be deleted
         const reactionIdx = thought.reactions.findIndex(
-          (reaction) => reaction.reactionId.toString() === reactionId
+          (reaction) => reaction._id.toString() === reactionId
         );
+        console.log("reactionIdx: " + reactionIdx);
         // if the reaction is not found
         if (reactionIdx === -1) {
           // return status 404 and error message
