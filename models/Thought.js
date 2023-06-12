@@ -62,10 +62,11 @@ const thoughtSchema = new mongoose.Schema(
 
 // define a virtual property called "reactionCount" using a getter function
 thoughtSchema.virtual('reactionCount', {
-  ref: 'Reaction', // refer to the name of the reaction model
-  localField: '_id', // field from the current model (Thought)
-  foreignField: 'thoughtId', // field from the referenced model (Reaction)
-  count: true // set the `count` option to true to calculate the count
+  ref: 'Reaction',
+  localField: '_id',
+  foreignField: 'thoughtId',
+  justOne: false, // Set justOne to false to populate an array of reactions
+  count: true
 });
 
 // create the Thought model using the thoughtSchema

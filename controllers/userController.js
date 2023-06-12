@@ -1,19 +1,19 @@
 const { User, Thought } = require('../models');
 
 /**
- * @friendCount
+ * @countFriends
  * Uses the virtual property in the User model
  * to calculate the number of friends for the user
  */
-const friendCount = async () => {
+const countFriends = async () => {
   // build an aggregation pipeline on the User model
-  const friendCount = await User.aggregate() 
+  const getData = await User.aggregate() 
     // count the number of friends in the document
     .count('friendCount')
     // execute the aggregation pipeline
     .exec();
   // extract the friendCount value from the aggregation result
-  const count = friendCount[0].friendCount;
+  const count = getData[0].friendCount;
   return count;
 }
 
@@ -32,7 +32,7 @@ module.exports = {
         // initialize variables
         const userObj = {
           user, // user data
-          friendCount: await friendCount(), // friend count
+          friendCount: await countFriends(), // friend count
         };
         // return the user object
         return res.json(userObj); 
@@ -55,7 +55,7 @@ module.exports = {
         // initialize variables
         const userObj = {
           user, // user data
-          friendCount: await friendCount(), // friend count
+          friendCount: await countFriends(), // friend count
         };
         // return the user object
         return res.json(userObj); 
@@ -83,7 +83,7 @@ module.exports = {
         // initialize variables
         const userObj = {
           user, // user data
-          friendCount: await friendCount(), // friend count
+          friendCount: await countFriends(), // friend count
         };
         // return the user object
         return res.json(userObj);
@@ -115,7 +115,7 @@ module.exports = {
         // initialize variables
         const userObj = {
           user, // user data
-          friendCount: await friendCount(), // friend count
+          friendCount: await countFriends(), // friend count
         };
         // return the user object
         return res.json(userObj);
