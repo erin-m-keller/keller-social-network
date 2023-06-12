@@ -31,8 +31,10 @@ module.exports = {
    * returns a specific user based on id
    */
   getSingleUser(req, res) {
+    // initialize variables
+    const { userId } = req.params;
     // find user using id param
-    User.findOne({ _id: req.params.userId })
+    User.findOne({ _id: userId })
       // exclude the '__v' field from the returned document
       .select('-__v')
       // return data
@@ -51,9 +53,11 @@ module.exports = {
    * updates a specific users username based on id
    */
   updateUser(req, res) {
+    // initialize variables
+    const { userId } = req.params;
     // find and update a specific user
     User.findOneAndUpdate(
-      { _id: req.params.userId }, // user id
+      { _id: userId }, // user id
       { $set: req.body }, // data to update
       { runValidators: true, new: true } // run any validation necessary on the data
     // return data
@@ -73,15 +77,17 @@ module.exports = {
    * with any associated thoughts
    */
   deleteUser(req, res) {
+    // initialize variables
+    const { userId } = req.params;
     // find and delete a specific user
-    User.findOneAndDelete({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: userId })
       // return data
       .then((user) =>
         !user
           // if user not found, return status 404 and error message
           ? res.status(404).json({ message: 'No user with this ID.' })
           // delete associated thoughts
-          : Thought.deleteMany({ userId: req.params.userId }) 
+          : Thought.deleteMany({ userId: userId }) 
       )
       // return success message once deleted
       .then(() => res.json({ message: 'User and associated thoughts deleted.' }))

@@ -7,8 +7,10 @@ module.exports = {
    * friend list
    */
   addFriend(req, res) {
+    // initialize variables
+    const { userId, friendId } = req.params;
     // find the user by id
-    User.findById(req.params.userId)
+    User.findById(userId)
     // return data
     .then((user) => {
       // if user not found
@@ -17,7 +19,7 @@ module.exports = {
         return res.status(404).json({ message: 'No user with this ID.' });
       }
       // add the friend ID to the user's friends array
-      user.friends.push(req.params.friendId);
+      user.friends.push(friendId);
       // save the updated user object
       return user.save();
     })
@@ -35,8 +37,10 @@ module.exports = {
    * the specified users friend list
    */
   deleteFriend(req, res) {
+    // initialize variables
+    const { userId, friendId } = req.params;
     // find the user by id
-    User.findById(req.params.userId)
+    User.findById(userId)
       .then((user) => {
         // if user not found
         if (!user) {
@@ -44,7 +48,7 @@ module.exports = {
           return res.status(404).json({ message: 'No user with this ID.' });
         }
         // find the index of the friendId in the user's friends array
-        const friendIdx = user.friends.indexOf(req.params.friendId);
+        const friendIdx = user.friends.indexOf(friendId);
         // if friendId not found 
         if (friendIdx === -1) {
           // return status 404 and error message

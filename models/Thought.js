@@ -46,7 +46,12 @@ const thoughtSchema = new mongoose.Schema(
     },
     username: {
       type: String, // type is a string
-      required: true // username is required
+      required: true // userId is required
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     reactions: [reactionSchema] // reactions field, an array of nested documents using reactionSchema
   },
