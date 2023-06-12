@@ -4,7 +4,7 @@ USERS:
 - GET: Find all users*
 - GET: Find user by ID*
 - POST: create user*
-- PUT: update user
+- PUT: update user*
 - DELETE: delete user
 
 FRIENDS:
