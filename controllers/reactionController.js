@@ -36,6 +36,31 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   /**
+   * @getReactionCount
+   * returns the reaction count for a specific thought based on thoughtId
+   */
+  getReactionCount(req, res) {
+    // initialize variables
+    const { thoughtId } = req.params;
+    // find the thought by id
+    Thought.findById(thoughtId)
+      // populate virtual properties
+      .populate('reactions')
+      // return data
+      .then((thought) => {
+        if (!thought) {
+          // if thought not found, return status 404 and error message
+          return res.status(404).json({ message: 'No thought with this ID.' });
+        }
+        // initialize variables
+        const reactionCount = thought.reactions.length;
+        // return the reaction count
+        res.json({ "Reaction Count": reactionCount });
+      })
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
+  },
+  /**
    * @deleteReaction
    * deletes a specific user based on id, along
    * with any associated thoughts
