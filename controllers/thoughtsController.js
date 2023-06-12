@@ -40,13 +40,34 @@ module.exports = {
     .catch((err) => res.status(500).json(err));
   },
   /**
+   * @getSingleThought
+   * returns a specific thought based on id
+   */
+  getSingleThought(req, res) {
+    // initialize variables
+    const { thoughtId } = req.params;
+    // find thought using id param
+    Thought.findOne({ _id: thoughtId })
+      // exclude the '__v' field from the returned document
+      .select('-__v')
+      // return data
+      .then((thought) =>
+        !thought 
+          // if thought not found, return status 404 and error message
+          ? res.status(404).json({ message: 'No thought with this ID.' })
+          // else, return thought
+          : res.json(thought)
+      )
+      // return status 500 and error message
+      .catch((err) => res.status(500).json(err));
+  },
+  /**
    * @deleteThought
    * deletes a thought based on id
    */
   deleteThought(req, res) {
     // initialize variables
     const { thoughtId } = req.params;
-    console.log("thoughtId: " + thoughtId);
     // find and delete a specific user
     Thought.findOneAndDelete({ _id: thoughtId })
       // return data
