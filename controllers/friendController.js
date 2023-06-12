@@ -32,33 +32,6 @@ module.exports = {
     .catch((err) => res.status(500).json(err));
   },
   /**
-   * @getFriendCount
-   * returns the friend count for a specific user based on userId
-   */
-  getFriendCount(req, res) {
-    // initialize variables
-    const { userId } = req.params;
-    // find the user by id
-    User.findOne({ _id: userId })
-      // populate virtual properties
-      .populate('friends')
-      // return data
-      .then((user) => {
-        console.log("user: " + JSON.stringify(user));
-        if (!user) {
-          // if user not found, return status 404 and error message
-          return res.status(404).json({ message: 'No user with this ID.' });
-        }
-        console.log("user.friends: " + JSON.stringify(user.friends));
-        // initialize variables
-        const friendCount = user.friends.length; // Corrected access to the friends field
-        // return the friend count
-        res.json({ "Friend Count": friendCount });
-      })
-      // return status 500 and error message
-      .catch((err) => res.status(500).json(err));
-  },
-  /**
    * @deleteFriend
    * deletes a specific friend based on id, from
    * the specified users friend list

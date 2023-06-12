@@ -1,5 +1,22 @@
 const { User, Thought } = require('../models');
 
+/**
+ * @friendCount
+ * Uses the virtual property in the User model
+ * to calculate the number of friends for the user
+ */
+const friendCount = async () => {
+  // build an aggregation pipeline on the User model
+  const friendCount = await User.aggregate() 
+    // count the number of friends in the document
+    .count('friendCount')
+    // execute the aggregation pipeline
+    .exec();
+  // extract the friendCount value from the aggregation result
+  const count = friendCount[0].friendCount;
+  return count;
+}
+
 module.exports = {
   /**
    * @getUsers
@@ -8,8 +25,18 @@ module.exports = {
   getUsers(req, res) {
     // find all users
     User.find()
+      // exclude the '__v' field from the returned document
+      .select('-__v')
       // return data
-      .then((users) => res.json(users))
+      .then(async (user) => {
+        // initialize variables
+        const userObj = {
+          user, // user data
+          friendCount: await friendCount(), // friend count
+        };
+        // return the user object
+        return res.json(userObj); 
+      })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   },
@@ -21,8 +48,18 @@ module.exports = {
   createUser(req, res) {
     // create a new user
     User.create(req.body)
+      // exclude the '__v' field from the returned document
+      .select('-__v')
       // return data
-      .then((user) => res.json(user))
+      .then(async (user) => {
+        // initialize variables
+        const userObj = {
+          user, // user data
+          friendCount: await friendCount(), // friend count
+        };
+        // return the user object
+        return res.json(userObj); 
+      })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   },
@@ -38,13 +75,19 @@ module.exports = {
       // exclude the '__v' field from the returned document
       .select('-__v')
       // return data
-      .then((user) =>
-        !user 
+      .then(async (user) => {
+        if (!user) {
           // if user not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No user with this ID.' })
-          // else, return user
-          : res.json(user)
-      )
+          res.status(404).json({ message: 'No user with this ID.' })
+        }
+        // initialize variables
+        const userObj = {
+          user, // user data
+          friendCount: await friendCount(), // friend count
+        };
+        // return the user object
+        return res.json(userObj);
+      })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   },
@@ -60,14 +103,23 @@ module.exports = {
       { _id: userId }, // user id
       { $set: req.body }, // data to update
       { runValidators: true, new: true } // run any validation necessary on the data
+    )
+    // exclude the '__v' field from the returned document
+    .select('-__v')
     // return data
-    ).then((user) =>
-        !user
+    .then(async (user) => {
+        if (!user) {
           // if user not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No user with this ID.' })
-          // else, return user
-          : res.json(user)
-      )
+          res.status(404).json({ message: 'No user with this ID.' })
+        }
+        // initialize variables
+        const userObj = {
+          user, // user data
+          friendCount: await friendCount(), // friend count
+        };
+        // return the user object
+        return res.json(userObj);
+      })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   },
@@ -81,6 +133,8 @@ module.exports = {
     const { userId } = req.params;
     // find and delete a specific user
     User.findOneAndDelete({ _id: userId })
+      // exclude the '__v' field from the returned document
+      .select('-__v')
       // return data
       .then((user) =>
         !user

@@ -29,10 +29,6 @@ const reactionSchema = new mongoose.Schema(
 // create a new Mongoose schema
 const thoughtSchema = new mongoose.Schema(
   {
-    id: {
-      type: mongoose.Schema.Types.ObjectId, // type is an object id
-      default: () => new mongoose.Types.ObjectId(), // generates new object id
-    },
     thoughtText: {
       type: String, // type is a string
       required: true, // thought text is required
@@ -60,7 +56,7 @@ const thoughtSchema = new mongoose.Schema(
       virtuals: true, // include virtual properties when converting the document to JSON
       getters: true // apply getters, including virtual getters, when converting the document to JSON
     },
-    id: true  // exclude the default "_id" field from the document
+    id: false  // exclude the default "id" field from the document
   }
 );
 

@@ -5,10 +5,6 @@ const mongoose = require('mongoose'),
 // create a new Mongoose schema
 const userSchema = new Schema(
   {
-    id: {
-      type: Schema.Types.ObjectId, // type is an object id
-      default: () => new Types.ObjectId(), // generates new object id
-    },
     username: {
       type: String, // type is string
       unique: true, // username must be unique
@@ -39,7 +35,7 @@ const userSchema = new Schema(
       virtuals: true, // include virtual properties when converting the document to JSON
       getters: true // apply getters, including virtual getters, when converting the document to JSON
     },
-    id: true  // exclude the default "_id" field from the document
+    id: false  // exclude the default "id" field from the document
   }
 );
 

@@ -9,7 +9,6 @@ const router = require('express').Router(),
       } = require('../../controllers/userController.js'),
       { 
         addFriend,
-        getFriendCount,
         deleteFriend,
       } = require('../../controllers/friendController.js');
 
@@ -22,11 +21,6 @@ router
   .get(getSingleUser)
   .put(updateUser)
   .delete(deleteUser);
-
-// the path is: /api/users/:userId/friends
-router
-  .route('/:userId/friends')
-  .get(getFriendCount);
 
 // the path is: /api/users/:userId/friends/:friendId
 router
