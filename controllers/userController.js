@@ -39,7 +39,7 @@ module.exports = {
       .then((user) =>
         !user 
           // if user not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No user with that ID.' })
+          ? res.status(404).json({ message: 'No user with this ID.' })
           // else, return user
           : res.json(user)
       )
@@ -60,7 +60,7 @@ module.exports = {
     ).then((user) =>
         !user
           // if user not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No user with this id.' })
+          ? res.status(404).json({ message: 'No user with this ID.' })
           // else, return user
           : res.json(user)
       )
@@ -79,7 +79,7 @@ module.exports = {
       .then((user) =>
         !user
           // if user not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No user with this id.' })
+          ? res.status(404).json({ message: 'No user with this ID.' })
           // delete associated thoughts
           : Thought.deleteMany({ userId: req.params.userId }) 
       )

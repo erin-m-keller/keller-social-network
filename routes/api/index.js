@@ -2,7 +2,7 @@
 const router = require('express').Router(),
       userRoutes = require('./userRoutes');
 
-// set the api path
+// set the users api path
 router.use('/users', userRoutes);
 
 // export the routes
