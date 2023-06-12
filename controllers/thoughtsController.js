@@ -24,7 +24,6 @@ module.exports = {
     // create a new thought
     Thought.create({ thoughtText, username, userId })
     .then((thought) => {
-      console.log("create thought first then");
       // push the created thought's id to the user's thoughts array
       return User.findOneAndUpdate(
         { _id: userId },

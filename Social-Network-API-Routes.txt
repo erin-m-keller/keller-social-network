@@ -11,13 +11,13 @@ FRIENDS:
  - POST: add friend*
  - DELETE: remove friend*
 
-REACTIONS:
- - POST: create reaction
- - DELETE: remove reaction
-
 THOUGHTS:
  - GET: get all thoughts*
  - GET: get thought by id*
  - POST: create thought*
  - PUT: update thought by id*
  - DELETE: delete a thought*
+
+ REACTIONS:
+ - POST: create reaction
+ - DELETE: remove reaction
