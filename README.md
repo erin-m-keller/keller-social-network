@@ -74,7 +74,7 @@
 
   ## Screenshot
 
-  // TODO: Add screenshot
+  ![insomniaScreenshot](./public/images/finished-product.png)
   
   ## Usage
 
