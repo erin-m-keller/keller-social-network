@@ -91,16 +91,24 @@ module.exports = {
   deleteThought(req, res) {
     // initialize variables
     const { thoughtId } = req.params;
-    // find and delete a specific user
+    // find and delete a specific thought
     Thought.findOneAndDelete({ _id: thoughtId })
-      // return data
-      .then((thought) =>
-        !thought
+      .then((thought) => {
+        if (!thought) {
           // if thought not found, return status 404 and error message
-          ? res.status(404).json({ message: 'No thought with this ID.' })
-          // return success message once deleted
-          : res.json({ message: 'User and associated thoughts deleted.' }) 
-      )
+          return res.status(404).json({ message: 'No thought with this ID.' });
+        }
+        // remove the thought's ID from the user's thoughts array
+        return User.findOneAndUpdate(
+          {},
+          { $pull: { thoughts: thoughtId } },
+          { new: true }
+        );
+      })
+      .then(() => {
+        // return success message once the thought is deleted and removed from the user's thought array
+        res.json({ message: 'Thought successfully deleted and removed from User\'s thought array.' });
+      })
       // return status 500 and error message
       .catch((err) => res.status(500).json(err));
   }
