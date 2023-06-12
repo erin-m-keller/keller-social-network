@@ -11,7 +11,6 @@
   * [Screenshot](#screenshot)
   * [Usage](#usage)
   * [License](#license)
-  * [Outside Resources](#outside-resources)
   * [Questions](#questions)
 
   ## Technology Stack
@@ -82,10 +81,6 @@
   
   ## License 
   [![MIT license](https://img.shields.io/badge/License-MIT-purple.svg)](https://lbesson.mit-license.org/)
-
-  ## Outside Resources
-  
-  // TODO: Add outside resources if applicable
   
   ## Questions
   If you have any questions about this project, please contact me directly at [aestheticartist@gmail.com](aestheticartist@gmail.com).  
