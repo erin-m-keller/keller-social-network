@@ -9,6 +9,7 @@ const router = require('express').Router(),
       } = require('../../controllers/thoughtsController.js'),
       { 
         addReaction,
+        deleteReaction,
       } = require('../../controllers/reactionController.js');
 
 // the path is: /api/thoughts
@@ -24,7 +25,8 @@ router
 // the path is: /api/thoughts/:thoughtId/reactions
 router
   .route('/:thoughtId/reactions')
-  .post(addReaction);
+  .post(addReaction)
+  .delete(deleteReaction);
 
 // export the routes
 module.exports = router;
